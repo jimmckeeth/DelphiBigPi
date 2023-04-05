@@ -1,0 +1,143 @@
+object BigPiGui: TBigPiGui
+  Left = 0
+  Top = 0
+  Caption = 'Big Pi'
+  ClientHeight = 800
+  ClientWidth = 350
+  Padding.Left = 10.000000000000000000
+  Padding.Top = 10.000000000000000000
+  Padding.Right = 10.000000000000000000
+  Padding.Bottom = 10.000000000000000000
+  Constraints.MinHeight = 550.000000000000000000
+  Constraints.MinWidth = 350.000000000000000000
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 3
+  object Label1: TLabel
+    Align = Top
+    Position.X = 10.000000000000000000
+    Position.Y = 49.000000000000000000
+    Size.Width = 330.000000000000000000
+    Size.Height = 31.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Bailey'#8211'Borwein'#8211'Plouffe (BigIntegers)'
+    TabOrder = 1
+  end
+  object Label2: TLabel
+    Align = Top
+    Position.X = 10.000000000000000000
+    Position.Y = 273.000000000000000000
+    Size.Width = 330.000000000000000000
+    Size.Height = 41.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Chudnovsky (BigDecimals)'
+    TabOrder = 0
+  end
+  object bbpMemo: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    TextSettings.WordWrap = True
+    Align = Top
+    Position.X = 10.000000000000000000
+    Position.Y = 80.000000000000000000
+    Size.Width = 330.000000000000000000
+    Size.Height = 193.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Viewport.Width = 322.000000000000000000
+    Viewport.Height = 185.000000000000000000
+  end
+  object chudnovskyMemo: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    TextSettings.WordWrap = True
+    Align = Top
+    Position.X = 10.000000000000000000
+    Position.Y = 314.000000000000000000
+    Size.Width = 330.000000000000000000
+    Size.Height = 193.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Viewport.Width = 322.000000000000000000
+    Viewport.Height = 185.000000000000000000
+  end
+  object Layout1: TLayout
+    Align = Top
+    Position.X = 10.000000000000000000
+    Position.Y = 10.000000000000000000
+    Size.Width = 330.000000000000000000
+    Size.Height = 39.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    object Label3: TLabel
+      Align = Left
+      Size.Width = 65.000000000000000000
+      Size.Height = 39.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Digits'
+      TabOrder = 0
+    end
+    object digitsEdit: TSpinBox
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Align = Left
+      TabOrder = 1
+      Cursor = crIBeam
+      Min = 10.000000000000000000
+      Max = 100000.000000000000000000
+      Value = 1000.000000000000000000
+      Position.X = 65.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 144.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Button1: TButton
+      Align = Right
+      Position.X = 226.000000000000000000
+      Size.Width = 104.000000000000000000
+      Size.Height = 39.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'Generate'
+      OnClick = Button1Click
+    end
+  end
+  object Z: TLayout
+    Align = Client
+    Size.Width = 330.000000000000000000
+    Size.Height = 283.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    object ScaledLayout1: TScaledLayout
+      Align = Fit
+      OriginalWidth = 283.000000000000000000
+      OriginalHeight = 283.000000000000000000
+      Size.Width = 283.000000000000000000
+      Size.Height = 283.000000000000000000
+      Size.PlatformDefault = False
+      object Path1: TPath
+        Align = Center
+        Data.Path = {
+          230000000000000033538D4414AEAF420100000033538D449919754301000000
+          E19A5B44991975430200000020305A44D34DA94302000000DF5F4C44B8BE5244
+          0200000020605D44990963440200000022FB72445CDF76440200000062988644
+          1AFF674402000000D2E58844973E4A440100000092808D44973E4A4402000000
+          D17D8A444120984402000000382F2744608593440200000057042A4499995B44
+          0200000057442E44148E2D4402000000D829324498D9DF4302000000591F3744
+          281C754301000000A8C7FA43281C754302000000A887F6435C0FC74302000000
+          2712E9435C1F6A44020000009E70BC438F4A8444020000009A7A954370ED9144
+          0200000078704642B0228A440200000028F355437AF45B44020000009E10B643
+          144E2944020000009EB0C0435ACFF5430200000061E6C943241C754302000000
+          B8B57343241C754302000000A3473F4326877643020000003CB8D1421CC5C743
+          01000000303685421CC5C743020000001E5C0243245C2443020000002CC94743
+          28B3AF4202000000DEE5DA4328B3AF420100000011538D4428B3AF4203000000
+          33538D4414AEAF42}
+        Margins.Top = 30.000000000000000000
+        Size.Width = 300.000000000000000000
+        Size.Height = 300.000000000000000000
+        Size.PlatformDefault = False
+      end
+    end
+  end
+end
