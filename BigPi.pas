@@ -12,7 +12,7 @@ type TDigits = Array of Byte;
 const MaxUnit64 = 18_446_744_073_709_551_615;
 
 function BBPpi(Places: UInt64): TDigits;
-function Chudnovsky(Places: UInt64): BigDecimal;
+function Chudnovsky(Places: Integer): BigDecimal;
 function DigitsToString(Digits: TDigits): String;
 
 implementation
@@ -57,11 +57,11 @@ begin
   end;
 end;
 
-function Chudnovsky(Places: UInt64):BigDecimal;
+function Chudnovsky(Places: Integer):BigDecimal;
 begin
   // Use +6 internally for calculations
-  var internalPrecision := MaxUnit64;
-  if Places <= MaxUnit64 - 6 then
+  var internalPrecision := MaxInt;
+  if Places <= MaxInt - 6 then
     internalPrecision := Places + 6;
 
   var lastSum: BigDecimal;
