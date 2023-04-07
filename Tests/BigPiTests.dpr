@@ -1,3 +1,9 @@
+{===============================================
+
+ Included with Rudy's Big Numbers Library
+ https://github.com/TurboPack/RudysBigNumbers/
+
+================================================}
 program BigPiTests;
 
 {$IFNDEF TESTINSIGHT}
