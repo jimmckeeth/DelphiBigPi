@@ -88,21 +88,21 @@ begin
       if idx >= places then 
         Break;
         
-      var newR := 10 * (r - n * t);
+      var LNewR := 10 * (r - n * t);
       n := (10 * (3 * q + r)) div t - 10 * n;
       q := q * 10;
-      r := newR;
+      r := LNewR;
     end
     else
     begin
-      var newR := (2 * q + r) * l;
-      var newN := (q * (7 * k) + 2 + (r * l)) div (t * l);
+      var LNewR := (2 * q + r) * l;
+      var LNewN := (q * (7 * k) + 2 + (r * l)) div (t * l);
       q := q * k;
       t := t * l;
       l := l + 2;
       k := k + 1;
-      n := newN;
-      r := newR;
+      n := LNewN;
+      r := LNewR;
     end;
   end;
 
