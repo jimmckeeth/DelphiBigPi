@@ -1,10 +1,10 @@
 ﻿{===============================================
 
- Delphi Pi — Computing Pi in Delphi
+ Delphi Big Pi — Computing Pi in Delphi
  https://github.com/jimmckeeth/DelphiPi
 
  Licensed under GNU General Public License v3.0 (GPLv3)
- Copyright © 2025 Jim McKeeth
+ Copyright © 2023-2026 by James McKeeth
 
  Uses Rudy's Big Numbers Library (BSD 2-Clause)
  https://github.com/TurboPack/RudysBigNumbers
@@ -30,16 +30,18 @@ type
     ScaledLayout1: TScaledLayout;
     delayLabel: TLabel;
     labelCount: TLabel;
-    Label2: TLabel;
+    footerLabel: TLabel;
     Layout1: TLayout;
     Layout2: TLayout;
     captionLabel: TLabel;
     StyleBook1: TStyleBook;
     labelDigit: TLabel;
     UpdateTimer: TTimer;
+    debugLabel: TLabel;
     procedure FormShow(Sender: TObject);
     function GetDelay: Double;
     procedure delayTrackBarChange(Sender: TObject);
+    procedure footerLabelDblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure UpdateTimerTimer(Sender: TObject);
@@ -72,8 +74,10 @@ end;
 
 procedure TBigPiGui.FormDestroy(Sender: TObject);
 begin
-  fQueue.Shutdown;      // unblocks EnqueueBatch if the producer is waiting
+  fQueue.Shutdown;        // unblocks EnqueueBatch if the producer is waiting
   background.Terminate;
+  background.WaitFor;     // ensure thread has fully exited before freeing queue
+  FreeAndNil(background);
   fQueue.Free;
 end;
 
@@ -111,6 +115,7 @@ begin
           ; // shutdown requested; thread exits normally
       end;
     end);
+  background.FreeOnTerminate := False; // so we can WaitFor in FormDestroy
   background.Start;
   UpdateTimer.Enabled := True;
 end;
@@ -154,6 +159,8 @@ begin
     piMemo.GoToTextEnd;
     piMemo.InsertAfter(piMemo.CaretPosition, digit, [TInsertOption.MoveCaret]);
     piMemo.Repaint;
+    if debugLabel.Visible then
+      debugLabel.Text := Format('Queue size: %.0n', [fQueue.Count + 0.0]);
     UpdateTimer.Enabled := True;
   end;
 end;
@@ -167,6 +174,11 @@ begin
   UpdateTimer.Enabled := False;
   UpdateTimer.Interval := Trunc(delayTrackBar.Value * 10);
   UpdateTimer.Enabled := True;
+end;
+
+procedure TBigPiGui.footerLabelDblClick(Sender: TObject);
+begin
+  debugLabel.Visible := not debuglabel.Visible;
 end;
 
 end.

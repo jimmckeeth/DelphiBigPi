@@ -17,10 +17,11 @@ object BigPiGui: TBigPiGui
   OnDestroy = FormDestroy
   OnShow = FormShow
   DesignerMasterStyle = 3
-  object Label2: TLabel
+  object footerLabel: TLabel
     Align = Bottom
     AutoSize = True
     StyledSettings = [Family, Style, FontColor]
+    HitTest = True
     Margins.Top = 2.000000000000000000
     Margins.Bottom = 2.000000000000000000
     Position.X = 10.000000000000000000
@@ -32,7 +33,8 @@ object BigPiGui: TBigPiGui
     TextSettings.HorzAlign = Center
     TextSettings.Trimming = None
     Text = 'Technically limited to 18,446,744,073,709,551,615 digits.'
-    TabOrder = 0
+    TabOrder = 1
+    OnDblClick = footerLabelDblClick
   end
   object Layout1: TLayout
     Align = Top
@@ -41,7 +43,7 @@ object BigPiGui: TBigPiGui
     Size.Width = 356.000000000000000000
     Size.Height = 63.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 1
+    TabOrder = 2
     object Label1: TLabel
       Align = Top
       HitTest = True
@@ -95,7 +97,7 @@ object BigPiGui: TBigPiGui
     Size.Width = 356.000000000000000000
     Size.Height = 484.333312988281300000
     Size.PlatformDefault = False
-    TabOrder = 2
+    TabOrder = 3
     object piMemo: TMemo
       Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
       DataDetectorTypes = []
@@ -143,7 +145,7 @@ object BigPiGui: TBigPiGui
     TextSettings.Trimming = None
     Text = 'captionLabel'
     Visible = False
-    TabOrder = 3
+    TabOrder = 4
   end
   object StyleBook1: TStyleBook
     Styles = <
@@ -13130,5 +13132,23 @@ object BigPiGui: TBigPiGui
     OnTimer = UpdateTimerTimer
     Left = 39
     Top = 161
+  end
+  object debugLabel: TLabel
+    Align = Bottom
+    AutoSize = True
+    StyledSettings = [Family, Style, FontColor]
+    Margins.Top = 2.000000000000000000
+    Margins.Bottom = 2.000000000000000000
+    Position.X = 10.000000000000000000
+    Position.Y = 542.666625976562500000
+    Size.Width = 356.000000000000000000
+    Size.Height = 12.666666984558110000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 10.000000000000000000
+    TextSettings.HorzAlign = Center
+    TextSettings.Trimming = None
+    Text = 'Debug information - double tap to hide/show'
+    Visible = False
+    TabOrder = 0
   end
 end

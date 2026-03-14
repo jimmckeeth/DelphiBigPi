@@ -1,10 +1,10 @@
-{===============================================
+﻿{===============================================
 
- Delphi Pi — Computing Pi in Delphi
+ Delphi Big Pi — Computing Pi in Delphi
  https://github.com/jimmckeeth/DelphiPi
 
  Licensed under GNU General Public License v3.0 (GPLv3)
- Copyright © 2025 Jim McKeeth
+ Copyright © 2023-2026 by James McKeeth
 
  Uses Rudy's Big Numbers Library (BSD 2-Clause)
  https://github.com/TurboPack/RudysBigNumbers
@@ -16,14 +16,6 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Generics.Collections, System.SyncObjs;
-
-const
-  /// <summary>
-  /// Milliseconds each blocking wait will hold before raising EQueueShutdown.
-  /// Normal operation should never reach this limit; it exists as a safety net
-  /// so that a dead producer or consumer does not hang the application forever.
-  /// </summary>
-  CQueueWaitTimeout = 5000;
 
 type
   EQueueShutdown = class(Exception);
@@ -55,10 +47,9 @@ type
     /// <param name="ABatch">The batch of characters to add to the queue.</param>
     /// <remarks>
     /// Blocks if the queue is at or above the threshold. Raises EQueueShutdown
-    /// if Shutdown has been called or CQueueWaitTimeout ms elapses while waiting.
-    /// If ABatch contains more characters than FThreshold - FQueue.Count, the queue
-    /// may briefly exceed FThreshold by up to Length(ABatch) - 1; this is an accepted
-    /// trade-off for bulk-enqueue.
+    /// if Shutdown has been called. If ABatch contains more characters than
+    /// FThreshold - FQueue.Count, the queue may briefly exceed FThreshold by up to
+    /// Length(ABatch) - 1; this is an accepted trade-off for bulk-enqueue.
     /// </remarks>
     procedure EnqueueBatch(const ABatch: string);
 
@@ -67,8 +58,7 @@ type
     /// </summary>
     /// <returns>The character retrieved from the queue.</returns>
     /// <remarks>
-    /// Blocks if the queue is empty. Raises EQueueShutdown if Shutdown has been
-    /// called or CQueueWaitTimeout ms elapses while waiting.
+    /// Blocks if the queue is empty. Raises EQueueShutdown if Shutdown has been called.
     /// </remarks>
     function DequeueChar: Char;
 
@@ -77,6 +67,8 @@ type
     /// </summary>
     /// <returns>Returns the number of characters currently in the queue.</returns>
     function Count: Integer;
+
+    property Threshold: Integer read FThreshold write FThreshold;
   end;
 
 implementation
@@ -132,8 +124,7 @@ begin
     finally
       FLock.Release;
     end;
-    if FNotFullEvent.WaitFor(CQueueWaitTimeout) <> wrSignaled then
-      raise EQueueShutdown.Create('Timed out waiting for queue space');
+    FNotFullEvent.WaitFor;
   end;
 end;
 
@@ -157,8 +148,7 @@ begin
     finally
       FLock.Release;
     end;
-    if FNotEmptyEvent.WaitFor(CQueueWaitTimeout) <> wrSignaled then
-      raise EQueueShutdown.Create('Timed out waiting for queue data');
+    FNotEmptyEvent.WaitFor;
   end;
 end;
 
