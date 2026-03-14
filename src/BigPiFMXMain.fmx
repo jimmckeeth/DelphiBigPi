@@ -13124,10 +13124,10 @@ object BigPiGui: TBigPiGui
     Left = 39
     Top = 241
   end
-  object Timer1: TTimer
+  object UpdateTimer: TTimer
     Enabled = False
     Interval = 100
-    OnTimer = Timer1Timer
+    OnTimer = UpdateTimerTimer
     Left = 39
     Top = 161
   end

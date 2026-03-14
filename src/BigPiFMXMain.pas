@@ -36,13 +36,13 @@ type
     captionLabel: TLabel;
     StyleBook1: TStyleBook;
     labelDigit: TLabel;
-    Timer1: TTimer;
+    UpdateTimer: TTimer;
     procedure FormShow(Sender: TObject);
     function GetDelay: Double;
     procedure delayTrackBarChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
+    procedure UpdateTimerTimer(Sender: TObject);
     procedure Label1Click(Sender: TObject);
   private
     { Private declarations }
@@ -72,6 +72,7 @@ end;
 
 procedure TBigPiGui.FormDestroy(Sender: TObject);
 begin
+  fQueue.Shutdown;      // unblocks EnqueueBatch if the producer is waiting
   background.Terminate;
   fQueue.Free;
 end;
@@ -83,30 +84,35 @@ begin
 
   background := TThread.CreateAnonymousThread(
     procedure begin
-      while not TThread.CheckTerminated do
-      begin
-        var FFirstChunk := True;
-        
-        BBPpi(MaxInt-1, procedure(chunk: TDigits) 
-          begin
-            if TThread.CheckTerminated then 
-              Exit;
-              
-            var Digits := DigitsToString(Chunk);
-            
-            if FFirstChunk then
+      try
+        while not TThread.CheckTerminated do
+        begin
+          var FFirstChunk := True;
+
+          BBPpi(MaxInt-1, procedure(chunk: TDigits)
             begin
-              Digits := Digits.Insert(1, '.');
-              FFirstChunk := False;
-            end;
-  
-            fQueue.EnqueueBatch(Digits);
-          end
-        );
+              if TThread.CheckTerminated then
+                Exit;
+
+              var Digits := DigitsToString(Chunk);
+
+              if FFirstChunk then
+              begin
+                Digits := Digits.Insert(1, '.');
+                FFirstChunk := False;
+              end;
+
+              fQueue.EnqueueBatch(Digits);
+            end
+          );
+        end;
+      except
+        on EQueueShutdown do
+          ; // shutdown requested; thread exits normally
       end;
     end);
   background.Start;
-
+  UpdateTimer.Enabled := True;
 end;
 
 function TBigPiGui.GetDelay: Double;
@@ -118,36 +124,37 @@ end;
 
 procedure TBigPiGui.Label1Click(Sender: TObject);
 begin
-  Timer1.Enabled := True;
+  UpdateTimer.Enabled := True;
 end;
 
-procedure TBigPiGui.Timer1Timer(Sender: TObject);
+procedure TBigPiGui.UpdateTimerTimer(Sender: TObject);
 var
   digit: Char;
 begin
   if FQueue.Count > 0 then
   begin
-    Timer1.Enabled := False;
+    UpdateTimer.Enabled := False;
     try
-      // This would block if queue was empty, but we checked count
       digit := FQueue.DequeueChar;
-
-      if Application.Terminated then 
-        Exit;
-        
-      if not Assigned(Application.MainForm) then 
-        Exit;
-
-      Inc(lastCount);
-
-      labelCount.Text := Format('%.0n', [lastCount + 0.0]);
-      labelDigit.Text := digit;
-      piMemo.GoToTextEnd;
-      piMemo.InsertAfter(piMemo.CaretPosition, digit, [TInsertOption.MoveCaret]);
-      piMemo.Repaint;
-    finally
-      Timer1.Enabled := True;
+    except
+      on EQueueShutdown do
+        Exit; // leave timer disabled; queue is shutting down
     end;
+
+    if Application.Terminated then
+      Exit;
+
+    if not Assigned(Application.MainForm) then
+      Exit;
+
+    Inc(lastCount);
+
+    labelCount.Text := Format('%.0n', [lastCount + 0.0]);
+    labelDigit.Text := digit;
+    piMemo.GoToTextEnd;
+    piMemo.InsertAfter(piMemo.CaretPosition, digit, [TInsertOption.MoveCaret]);
+    piMemo.Repaint;
+    UpdateTimer.Enabled := True;
   end;
 end;
 
@@ -157,9 +164,9 @@ begin
     delayLabel.Align := TAlignLayout.Right
   else
     delayLabel.Align := TAlignLayout.Left;
-  Timer1.Enabled := False;
-  Timer1.Interval := Trunc(delayTrackBar.Value * 10);
-  Timer1.Enabled := True;
+  UpdateTimer.Enabled := False;
+  UpdateTimer.Interval := Trunc(delayTrackBar.Value * 10);
+  UpdateTimer.Enabled := True;
 end;
 
 end.
