@@ -47,28 +47,36 @@ implementation
 
 { TPiHashProvider }
 
-uses
-  System.Classes, IOUtils, BigPiTestsCommon;
+const
+  CPiHashes: array[0..18] of TPiHash = (
+    (Digits: 100;   Hash: '656c1ee50d1fa9de3b77d72b22641ceb'),
+    (Digits: 200;   Hash: '5b47d4ae95e6b89f2fbaf581dc8d83ee'),
+    (Digits: 300;   Hash: '80e07948a64ca612ffa291929523d95c'),
+    (Digits: 400;   Hash: '9f4707f438d862ebf6cfbea492d5ccae'),
+    (Digits: 500;   Hash: '8ee121e867aa81bf5c71bd1787c82e25'),
+    (Digits: 600;   Hash: '12e9de29b35a4498ad57972f96ed4c2c'),
+    (Digits: 700;   Hash: '881cb72991bdaa9fb9cc46aa8746e021'),
+    (Digits: 800;   Hash: '52aeaedaa2100355daa554249252f074'),
+    (Digits: 900;   Hash: '172e1c3653fe98db500604846085314d'),
+    (Digits: 1000;  Hash: 'f2ec976ae2ff84cbda86ded841c8edfa'),
+    (Digits: 2000;  Hash: '01581df247f9f4782a042fba44bef514'),
+    (Digits: 3000;  Hash: '27fcccc6df1cd3b500d36f9990c822cc'),
+    (Digits: 4000;  Hash: '9d68c2f031bcdbcc6bafbcf6a9017b83'),
+    (Digits: 5000;  Hash: '83368903d4f836fa39450208f1ea8179'),
+    (Digits: 6000;  Hash: '9c61b02bde8e907dfe0bbb6c2e2439c7'),
+    (Digits: 7000;  Hash: 'af03629d1ff1a0aae773a5ecb490c3a1'),
+    (Digits: 8000;  Hash: '3d0efaf1c2118a8fab40bcf60883c7b4'),
+    (Digits: 9000;  Hash: 'de2483c64a995b9a29a6608e19e85c9a'),
+    (Digits: 10000; Hash: 'fceb6f18bfb443fd5bcaa1dd97041ca8')
+  );
 
 constructor TPiHashProvider.Create;
 begin
   inherited;
   fHashes := TList<TPiHash>.Create;
-  var hashes := TStringList.Create;
-  try
-    hashes.NameValueSeparator := ',';
-    hashes.LoadFromFile(TPath.Combine(TestDataFolder,'pi-hashes.txt'));
-    // This will only run the quicker tests
-    for var i := 0 to Pred(hashes.Count div 2) do
-    begin
-      var hash: TPiHash;
-      hash.Digits := hashes.Names[i].ToInt64;
-      hash.Hash := hashes.ValueFromIndex[i];
-      fHashes.Add(hash);
-    end;
-  finally
-    hashes.Free;
-  end;
+  // This will only run the quicker tests
+  for var i := 0 to Pred(Length(CPiHashes) div 2) do
+    fHashes.Add(CPiHashes[i]);
 end;
 
 destructor TPiHashProvider.Destroy;

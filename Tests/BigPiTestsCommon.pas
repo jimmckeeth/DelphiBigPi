@@ -15,7 +15,7 @@ unit BigPiTestsCommon;
 interface
 
 const
-  TestDataFolder = '..\..\..\TestData\';
+  TestDataFolder = '..\..\..\Tests\TestData\';
 
 implementation
 

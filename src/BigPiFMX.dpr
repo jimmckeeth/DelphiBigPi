@@ -1,4 +1,4 @@
-{===============================================
+﻿{===============================================
 
  Delphi Pi — Computing Pi in Delphi
  https://github.com/jimmckeeth/DelphiPi
