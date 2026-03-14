@@ -1,0 +1,3 @@
+[submodule "lib/RudysBigNumbers"]
+	path = lib/RudysBigNumbers
+	url = https://github.com/TurboPack/RudysBigNumbers

@@ -1,10 +1,13 @@
 ﻿{===============================================
 
- Included with Rudy's Big Numbers Library
- https://github.com/TurboPack/RudysBigNumbers/
+ Delphi Pi — Computing Pi in Delphi
+ https://github.com/jimmckeeth/DelphiPi
 
- Licensed under BSD 2-Clause License
- Copyright © 2025 by Jim McKeeth
+ Licensed under GNU General Public License v3.0 (GPLv3)
+ Copyright © 2025 Jim McKeeth
+
+ Uses Rudy's Big Numbers Library (BSD 2-Clause)
+ https://github.com/TurboPack/RudysBigNumbers
 
 ================================================}
 unit BigPiFMXMain;
