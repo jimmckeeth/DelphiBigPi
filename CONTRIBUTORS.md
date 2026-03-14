@@ -1,11 +1,11 @@
 # Contributors
 
 **Jim McKeeth** — Original author and primary maintainer
-All algorithms, architecture, and the vast majority of the code.
+All algorithms, architecture, and the majority of the code.
 
-**TommiPrami** — Code style and formatting improvements
-Contributed several small PRs addressing Delphi code style conventions:
+**Tommi Prami** — Code style and formatting improvements
+Contributed several PRs addressing Delphi code style conventions:
 spacing, identifier casing, and indentation normalization.
 
 This project is powered by [Rudy's Big Numbers Library](https://github.com/TurboPack/RudysBigNumbers),
-originally created by Rudy Velthuis and now maintained by TurboPack.
+originally created by [Rudy Velthuis](https://github.com/rvelthuis) and now maintained by [TurboPack](https://github.com/TurboPack).
