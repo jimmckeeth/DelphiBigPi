@@ -22,6 +22,7 @@ uses
   TestInsight.DUnitX,
   {$ELSE}
   DUnitX.Loggers.Console,
+  DUnitX.Loggers.XML.NUnit,
   {$ENDIF }
   DUnitX.TestFramework,
   BigPiChudnovskyTests in 'BigPiChudnovskyTests.pas',

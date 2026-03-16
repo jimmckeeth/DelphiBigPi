@@ -9,10 +9,10 @@
         <Projects Include="Tests\BigPiTests.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="E:\Jim\Documents\Git\DelphiPi\src\BigPiConsole.dproj">
+        <Projects Include="src\BigPiConsole.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="E:\Jim\Documents\Git\DelphiPi\src\BigPiFMX.dproj">
+        <Projects Include="src\BigPiFMX.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -42,22 +42,22 @@
         <MSBuild Projects="Tests\BigPiTests.dproj" Targets="Make"/>
     </Target>
     <Target Name="BigPiConsole">
-        <MSBuild Projects="E:\Jim\Documents\Git\DelphiPi\src\BigPiConsole.dproj"/>
+        <MSBuild Projects="src\BigPiConsole.dproj"/>
     </Target>
     <Target Name="BigPiConsole:Clean">
-        <MSBuild Projects="E:\Jim\Documents\Git\DelphiPi\src\BigPiConsole.dproj" Targets="Clean"/>
+        <MSBuild Projects="src\BigPiConsole.dproj" Targets="Clean"/>
     </Target>
     <Target Name="BigPiConsole:Make">
-        <MSBuild Projects="E:\Jim\Documents\Git\DelphiPi\src\BigPiConsole.dproj" Targets="Make"/>
+        <MSBuild Projects="src\BigPiConsole.dproj" Targets="Make"/>
     </Target>
     <Target Name="BigPiFMX">
-        <MSBuild Projects="E:\Jim\Documents\Git\DelphiPi\src\BigPiFMX.dproj"/>
+        <MSBuild Projects="src\BigPiFMX.dproj"/>
     </Target>
     <Target Name="BigPiFMX:Clean">
-        <MSBuild Projects="E:\Jim\Documents\Git\DelphiPi\src\BigPiFMX.dproj" Targets="Clean"/>
+        <MSBuild Projects="src\BigPiFMX.dproj" Targets="Clean"/>
     </Target>
     <Target Name="BigPiFMX:Make">
-        <MSBuild Projects="E:\Jim\Documents\Git\DelphiPi\src\BigPiFMX.dproj" Targets="Make"/>
+        <MSBuild Projects="src\BigPiFMX.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
         <CallTarget Targets="BigNumbers;BigPiTests;BigPiConsole;BigPiFMX"/>
